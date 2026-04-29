@@ -1,23 +1,26 @@
 export const theme = {
   canvas: {
-    background: '#686868',
+    background: "#686868",
   },
   sphere: {
-    shell: '#1e3a5f',
-    wireframe: '#334155',
-    greatCircle: '#94a3b8',
+    shell: "#2976d9",
+    wireframe: "#f0f3f7",
+    greatCircle: "#000308",
   },
   axes: {
-    x: '#ef4444',
-    y: '#22c55e',
-    z: '#3b82f6',
+    x: "#ef4444",
+    y: "#22c55e",
+    z: "#3b82f6",
   },
   stateVector: {
-    body: '#ffffff',
-    trail: '#60a5fa',
-    projection: '#888888',
+    body: "#ffffff",
+    trail: "#ffffff",
+    projection: {
+      equatorial: "#db8a18",
+      polar: "#db8a18",
+    },
   },
   labels: {
-    poles: '#e2e8f0',
+    poles: "#e2e8f0",
   },
-} as const
+} as const;

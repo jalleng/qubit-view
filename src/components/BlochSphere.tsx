@@ -163,9 +163,9 @@ function AxisArrow({ dir, color, label, labelOffset }: AxisArrowProps) {
         <lineDashedMaterial
           color={color}
           transparent
-          opacity={0.35}
-          dashSize={0.07}
-          gapSize={0.05}
+          opacity={0.5}
+          dashSize={20}
+          gapSize={20}
         />
       </line>
       {/* arrowhead cone */}
@@ -254,11 +254,10 @@ function StateVector({ bloch }: StateVectorProps) {
           />
         </bufferGeometry>
         <lineDashedMaterial
-          color={theme.stateVector.projection}
-          transparent
-          opacity={0.5}
-          dashSize={0.06}
-          gapSize={0.04}
+          color={theme.stateVector.projection.polar}
+          opacity={1}
+          dashSize={0.1}
+          gapSize={0.05}
         />
       </line>
       {/* equatorial shadow dashed */}
@@ -270,11 +269,10 @@ function StateVector({ bloch }: StateVectorProps) {
           />
         </bufferGeometry>
         <lineDashedMaterial
-          color={theme.stateVector.projection}
-          transparent
-          opacity={0.5}
-          dashSize={0.06}
-          gapSize={0.04}
+          color={theme.stateVector.projection.equatorial}
+          opacity={1}
+          dashSize={0.1}
+          gapSize={0.05}
         />
       </line>
     </group>
@@ -346,14 +344,35 @@ export function BlochSphere() {
       </mesh>
 
       {/* great circles: equator (XY), XZ meridian, YZ meridian */}
-      <GreatCircle normal={new THREE.Vector3(0, 0, 1)} color={theme.sphere.greatCircle} />
-      <GreatCircle normal={new THREE.Vector3(0, 1, 0)} color={theme.sphere.greatCircle} />
-      <GreatCircle normal={new THREE.Vector3(1, 0, 0)} color={theme.sphere.greatCircle} />
+      <GreatCircle
+        normal={new THREE.Vector3(0, 0, 1)}
+        color={theme.sphere.greatCircle}
+      />
+      <GreatCircle
+        normal={new THREE.Vector3(0, 1, 0)}
+        color={theme.sphere.greatCircle}
+      />
+      <GreatCircle
+        normal={new THREE.Vector3(1, 0, 0)}
+        color={theme.sphere.greatCircle}
+      />
 
       {/* axes */}
-      <AxisArrow dir={new THREE.Vector3(1, 0, 0)} color={theme.axes.x} label="+X" />
-      <AxisArrow dir={new THREE.Vector3(0, 1, 0)} color={theme.axes.y} label="+Y" />
-      <AxisArrow dir={new THREE.Vector3(0, 0, 1)} color={theme.axes.z} label="+Z" />
+      <AxisArrow
+        dir={new THREE.Vector3(1, 0, 0)}
+        color={theme.axes.x}
+        label="+X"
+      />
+      <AxisArrow
+        dir={new THREE.Vector3(0, 1, 0)}
+        color={theme.axes.y}
+        label="+Y"
+      />
+      <AxisArrow
+        dir={new THREE.Vector3(0, 0, 1)}
+        color={theme.axes.z}
+        label="+Z"
+      />
 
       {/* pole labels */}
       <Text
