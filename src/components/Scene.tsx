@@ -62,11 +62,9 @@ export function Scene({ orbitAxisRef, resetCamera }: SceneProps) {
         else mat = rotZ(angle);
         const [nx, ny, nz] = mulMat3Vec3(mat, pos);
         cam.position.set(nx, ny, nz);
-
         const upVec: Vec3 = [cam.up.x, cam.up.y, cam.up.z]; // ← rotate current up
         const [ux, uy, uz] = mulMat3Vec3(mat, upVec);
         cam.up.set(ux, uy, uz);
-
         cam.lookAt(0, 0, 0);
         orbit.update();
       }
