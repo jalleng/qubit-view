@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
 import { useQubitStore } from "../store/useQubitStore";
+import { theme } from "../theme";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -218,19 +219,19 @@ function StateVector({ bloch }: StateVectorProps) {
             ]}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#ffffff" linewidth={3} />
+        <lineBasicMaterial color={theme.stateVector.body} linewidth={3} />
       </line>
       {/* cone */}
       <mesh position={conePos.toArray()} quaternion={quat}>
         <coneGeometry args={[0.035, 0.16, 12]} />
-        <meshStandardMaterial color="#ffffff" />
+        <meshStandardMaterial color={theme.stateVector.body} />
       </mesh>
       {/* tip dot */}
       <mesh position={tipPos.toArray()}>
         <sphereGeometry args={[0.03, 12, 12]} />
         <meshStandardMaterial
-          color="#ffffff"
-          emissive="#ffffff"
+          color={theme.stateVector.body}
+          emissive={theme.stateVector.body}
           emissiveIntensity={0.6}
         />
       </mesh>
@@ -253,7 +254,7 @@ function StateVector({ bloch }: StateVectorProps) {
           />
         </bufferGeometry>
         <lineDashedMaterial
-          color="#888888"
+          color={theme.stateVector.projection}
           transparent
           opacity={0.5}
           dashSize={0.06}
@@ -269,7 +270,7 @@ function StateVector({ bloch }: StateVectorProps) {
           />
         </bufferGeometry>
         <lineDashedMaterial
-          color="#888888"
+          color={theme.stateVector.projection}
           transparent
           opacity={0.5}
           dashSize={0.06}
@@ -303,7 +304,7 @@ function Trail() {
               />
             </bufferGeometry>
             <lineBasicMaterial
-              color="#60a5fa"
+              color={theme.stateVector.trail}
               transparent
               opacity={opacity * 0.7}
             />
@@ -327,7 +328,7 @@ export function BlochSphere() {
       <mesh>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial
-          color="#1e3a5f"
+          color={theme.sphere.shell}
           transparent
           opacity={0.08}
           wireframe={false}
@@ -337,7 +338,7 @@ export function BlochSphere() {
       <mesh>
         <sphereGeometry args={[1, 24, 24]} />
         <meshBasicMaterial
-          color="#334155"
+          color={theme.sphere.wireframe}
           wireframe
           transparent
           opacity={0.12}
@@ -345,20 +346,20 @@ export function BlochSphere() {
       </mesh>
 
       {/* great circles: equator (XY), XZ meridian, YZ meridian */}
-      <GreatCircle normal={new THREE.Vector3(0, 0, 1)} color="#94a3b8" />
-      <GreatCircle normal={new THREE.Vector3(0, 1, 0)} color="#94a3b8" />
-      <GreatCircle normal={new THREE.Vector3(1, 0, 0)} color="#94a3b8" />
+      <GreatCircle normal={new THREE.Vector3(0, 0, 1)} color={theme.sphere.greatCircle} />
+      <GreatCircle normal={new THREE.Vector3(0, 1, 0)} color={theme.sphere.greatCircle} />
+      <GreatCircle normal={new THREE.Vector3(1, 0, 0)} color={theme.sphere.greatCircle} />
 
       {/* axes */}
-      <AxisArrow dir={new THREE.Vector3(1, 0, 0)} color="#ef4444" label="+X" />
-      <AxisArrow dir={new THREE.Vector3(0, 1, 0)} color="#22c55e" label="+Y" />
-      <AxisArrow dir={new THREE.Vector3(0, 0, 1)} color="#3b82f6" label="+Z" />
+      <AxisArrow dir={new THREE.Vector3(1, 0, 0)} color={theme.axes.x} label="+X" />
+      <AxisArrow dir={new THREE.Vector3(0, 1, 0)} color={theme.axes.y} label="+Y" />
+      <AxisArrow dir={new THREE.Vector3(0, 0, 1)} color={theme.axes.z} label="+Z" />
 
       {/* pole labels */}
       <Text
         position={[0, 0, 1.25]}
         fontSize={0.13}
-        color="#e2e8f0"
+        color={theme.labels.poles}
         anchorX="center"
         anchorY="middle"
       >
@@ -367,7 +368,7 @@ export function BlochSphere() {
       <Text
         position={[0, 0, -1.25]}
         fontSize={0.13}
-        color="#e2e8f0"
+        color={theme.labels.poles}
         anchorX="center"
         anchorY="middle"
       >

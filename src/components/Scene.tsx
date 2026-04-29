@@ -4,6 +4,7 @@ import { useRef, useEffect, useCallback } from "react";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import * as THREE from "three";
 import { BlochSphere } from "./BlochSphere";
+import { theme } from "../theme";
 import { mulMat3Vec3, rotX, rotY, rotZ } from "../utils/matrixMath";
 import type { Vec3 } from "../utils/matrixMath";
 
@@ -107,7 +108,7 @@ export function Scene({ orbitAxisRef, resetCamera }: SceneProps) {
         fov: 45,
       }}
       gl={{ antialias: true }}
-      style={{ background: "#0d1117" }}
+      style={{ background: theme.canvas.background }}
     >
       <SceneInner orbitRef={orbitRef} />
     </Canvas>

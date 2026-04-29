@@ -3,6 +3,7 @@ import { useQubitStore } from "../store/useQubitStore";
 import { detectStateLabel, PRESETS } from "../utils/stateLabels";
 import { applyRx, applyRy, applyRz, rotationFrames } from "../utils/gates";
 import type { OrbitAxis } from "./Scene";
+import { theme } from "../theme";
 
 // ── animated state setter ─────────────────────────────────────────────────────
 
@@ -97,23 +98,11 @@ interface OrbitButtonProps {
   axis: OrbitAxis;
   dir: 1 | -1;
   label: string;
-  color: string;
   orbitAxisRef: React.MutableRefObject<{ axis: OrbitAxis; dir: number } | null>;
 }
 
-function OrbitButton({
-  axis,
-  dir,
-  label,
-  color,
-  orbitAxisRef,
-}: OrbitButtonProps) {
-  const colorMap: Record<string, string> = {
-    red: "border-red-500 text-red-400 hover:bg-red-500/20 active:bg-red-500/40",
-    green:
-      "border-green-500 text-green-400 hover:bg-green-500/20 active:bg-green-500/40",
-    blue: "border-blue-500 text-blue-400 hover:bg-blue-500/20 active:bg-blue-500/40",
-  };
+function OrbitButton({ axis, dir, label, orbitAxisRef }: OrbitButtonProps) {
+  const axisColor = theme.axes[axis];
 
   const start = () => {
     orbitAxisRef.current = { axis, dir };
@@ -129,7 +118,8 @@ function OrbitButton({
       onMouseLeave={stop}
       onTouchStart={start}
       onTouchEnd={stop}
-      className={`text-xs border rounded px-2 py-1 select-none cursor-pointer transition-colors ${colorMap[color]}`}
+      style={{ "--c": axisColor } as React.CSSProperties}
+      className="text-xs border border-[--c] text-[--c] hover:bg-[--c]/20 active:bg-[--c]/40 rounded px-2 py-1 select-none cursor-pointer transition-colors"
     >
       {label}
     </button>
@@ -241,48 +231,12 @@ export function ControlPanel({ orbitAxisRef, resetCamera }: ControlPanelProps) {
           Camera
         </h2>
         <div className="grid grid-cols-4 gap-1.5 mb-2">
-          <OrbitButton
-            axis="x"
-            dir={1}
-            label="X ↻"
-            color="red"
-            orbitAxisRef={orbitAxisRef}
-          />
-          <OrbitButton
-            axis="x"
-            dir={-1}
-            label="X ↺"
-            color="red"
-            orbitAxisRef={orbitAxisRef}
-          />
-          <OrbitButton
-            axis="y"
-            dir={1}
-            label="Y ↻"
-            color="green"
-            orbitAxisRef={orbitAxisRef}
-          />
-          <OrbitButton
-            axis="y"
-            dir={-1}
-            label="Y ↺"
-            color="green"
-            orbitAxisRef={orbitAxisRef}
-          />
-          <OrbitButton
-            axis="z"
-            dir={1}
-            label="Z ↻"
-            color="blue"
-            orbitAxisRef={orbitAxisRef}
-          />
-          <OrbitButton
-            axis="z"
-            dir={-1}
-            label="Z ↺"
-            color="blue"
-            orbitAxisRef={orbitAxisRef}
-          />
+          <OrbitButton axis="x" dir={1}  label="X ↻" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton axis="x" dir={-1} label="X ↺" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton axis="y" dir={1}  label="Y ↻" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton axis="y" dir={-1} label="Y ↺" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton axis="z" dir={1}  label="Z ↻" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton axis="z" dir={-1} label="Z ↺" orbitAxisRef={orbitAxisRef} />
         </div>
         <button
           onClick={() => resetCamera.current?.()}
