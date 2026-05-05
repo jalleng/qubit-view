@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Stack, Text, SimpleGrid, Box, Group, UnstyledButton, Slider } from "@mantine/core";
+import {
+  Stack,
+  Text,
+  SimpleGrid,
+  Box,
+  Group,
+  UnstyledButton,
+  Slider,
+} from "@mantine/core";
 import { useQubitStore } from "../store/useQubitStore";
 import { detectStateLabel, PRESETS } from "../utils/stateLabels";
 import { applyRx, applyRy, applyRz, rotationFrames } from "../utils/gates";
@@ -159,7 +167,10 @@ function RotationRow({ axis, isAnimating }: RotationRowProps) {
 
   return (
     <Group gap="xs" align="center" wrap="nowrap">
-      <Text className={classes.rotationLabel} style={{ color: axisColorMap[axis] }}>
+      <Text
+        className={classes.rotationLabel}
+        style={{ color: axisColorMap[axis] }}
+      >
         R{axis}
       </Text>
       <Slider
@@ -212,7 +223,7 @@ export function ControlPanel({ orbitAxisRef, resetCamera }: ControlPanelProps) {
   return (
     <Stack className={classes.panel} gap="md">
       <div>
-        <Text className={classes.panelTitle}>QubitView</Text>
+        <Text className={classes.panelTitle}>Bloch Sphere</Text>
         <Text className={classes.description}>
           An interactive Bloch sphere visualizer for single-qubit states. Rotate
           the view, apply gates, and explore preset states.
@@ -236,12 +247,42 @@ export function ControlPanel({ orbitAxisRef, resetCamera }: ControlPanelProps) {
       <section>
         <Text className={classes.sectionTitle}>Camera</Text>
         <SimpleGrid cols={4} spacing="xs" mb="xs">
-          <OrbitButton axis="x" dir={1} label="X ↻" orbitAxisRef={orbitAxisRef} />
-          <OrbitButton axis="x" dir={-1} label="X ↺" orbitAxisRef={orbitAxisRef} />
-          <OrbitButton axis="y" dir={1} label="Y ↻" orbitAxisRef={orbitAxisRef} />
-          <OrbitButton axis="y" dir={-1} label="Y ↺" orbitAxisRef={orbitAxisRef} />
-          <OrbitButton axis="z" dir={1} label="Z ↻" orbitAxisRef={orbitAxisRef} />
-          <OrbitButton axis="z" dir={-1} label="Z ↺" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton
+            axis="x"
+            dir={1}
+            label="X ↻"
+            orbitAxisRef={orbitAxisRef}
+          />
+          <OrbitButton
+            axis="x"
+            dir={-1}
+            label="X ↺"
+            orbitAxisRef={orbitAxisRef}
+          />
+          <OrbitButton
+            axis="y"
+            dir={1}
+            label="Y ↻"
+            orbitAxisRef={orbitAxisRef}
+          />
+          <OrbitButton
+            axis="y"
+            dir={-1}
+            label="Y ↺"
+            orbitAxisRef={orbitAxisRef}
+          />
+          <OrbitButton
+            axis="z"
+            dir={1}
+            label="Z ↻"
+            orbitAxisRef={orbitAxisRef}
+          />
+          <OrbitButton
+            axis="z"
+            dir={-1}
+            label="Z ↺"
+            orbitAxisRef={orbitAxisRef}
+          />
         </SimpleGrid>
         <UnstyledButton
           className={classes.resetButton}
