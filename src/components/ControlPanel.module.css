@@ -1,0 +1,167 @@
+.panel {
+  width: 18rem;
+  min-width: 15rem;
+  background-color: var(--mantine-color-dark-8);
+  border-left: 1px solid var(--mantine-color-dark-5);
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.panelTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dark-2);
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 0.75rem;
+  color: var(--mantine-color-dark-3);
+  line-height: 1.5;
+}
+
+.sectionTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mantine-color-dark-2);
+  margin-bottom: 0.5rem;
+}
+
+/* ── coord cards ── */
+
+.coordCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  gap: 0.125rem;
+}
+
+.coordCardPrimary {
+  background-color: var(--mantine-color-dark-5);
+}
+
+.coordCardSub {
+  background-color: var(--mantine-color-dark-7);
+}
+
+.coordLabel {
+  font-size: 0.75rem;
+  color: var(--mantine-color-dark-2);
+  line-height: 1;
+}
+
+.coordValue {
+  font-size: 0.875rem;
+  color: var(--mantine-color-dark-0);
+  line-height: 1;
+}
+
+/* ── orbit buttons ── */
+
+.orbitButton {
+  font-size: 0.75rem;
+  border: 1px solid var(--orbit-color);
+  color: var(--orbit-color);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 150ms;
+  text-align: center;
+}
+
+.orbitButton:hover {
+  background-color: color-mix(in srgb, var(--orbit-color) 20%, transparent);
+}
+
+.orbitButton:active {
+  background-color: color-mix(in srgb, var(--orbit-color) 40%, transparent);
+}
+
+/* ── reset / apply / preset buttons ── */
+
+.resetButton {
+  width: 100%;
+  font-size: 0.75rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  color: var(--mantine-color-dark-1);
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 150ms;
+  text-align: center;
+}
+
+.resetButton:hover {
+  background-color: var(--mantine-color-dark-6);
+}
+
+.applyButton {
+  font-size: 0.75rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  color: var(--mantine-color-dark-1);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 150ms;
+  flex-shrink: 0;
+}
+
+.applyButton:hover:not(:disabled) {
+  background-color: var(--mantine-color-dark-5);
+}
+
+.applyButton:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── rotation row ── */
+
+.rotationLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 1.5rem;
+  flex-shrink: 0;
+}
+
+.rotationSlider {
+  flex: 1;
+}
+
+.rotationValue {
+  font-size: 0.75rem;
+  color: var(--mantine-color-dark-1);
+  width: 2.5rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── preset buttons ── */
+
+.presetButton {
+  font-size: 0.75rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  color: var(--mantine-color-dark-1);
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 150ms;
+  text-align: center;
+}
+
+.presetButton:hover:not(:disabled) {
+  background-color: var(--mantine-color-dark-6);
+}
+
+.presetButton:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

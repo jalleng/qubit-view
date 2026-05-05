@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { Stack, Text, SimpleGrid, Box, Group, UnstyledButton, Slider } from "@mantine/core";
 import { useQubitStore } from "../store/useQubitStore";
 import { detectStateLabel, PRESETS } from "../utils/stateLabels";
 import { applyRx, applyRy, applyRz, rotationFrames } from "../utils/gates";
 import type { OrbitAxis } from "./Scene";
 import { theme } from "../theme";
+import classes from "./ControlPanel.module.css";
 
 // ── animated state setter ─────────────────────────────────────────────────────
 
@@ -83,14 +85,12 @@ interface CoordCardProps {
 
 function CoordCard({ label, value, sub }: CoordCardProps) {
   return (
-    <div
-      className={`flex flex-col items-center justify-center rounded-lg px-2 py-2 ${sub ? "bg-slate-800" : "bg-slate-700"} gap-0.5`}
+    <Box
+      className={`${classes.coordCard} ${sub ? classes.coordCardSub : classes.coordCardPrimary}`}
     >
-      <span className="text-xs text-slate-400 leading-none">{label}</span>
-      <span className="text-sm font-mono text-slate-100 leading-none">
-        {value}
-      </span>
-    </div>
+      <Text className={classes.coordLabel}>{label}</Text>
+      <Text className={classes.coordValue}>{value}</Text>
+    </Box>
   );
 }
 
@@ -112,17 +112,17 @@ function OrbitButton({ axis, dir, label, orbitAxisRef }: OrbitButtonProps) {
   };
 
   return (
-    <button
+    <UnstyledButton
+      className={classes.orbitButton}
+      style={{ "--orbit-color": axisColor } as React.CSSProperties}
       onMouseDown={start}
       onMouseUp={stop}
       onMouseLeave={stop}
       onTouchStart={start}
       onTouchEnd={stop}
-      style={{ "--c": axisColor } as React.CSSProperties}
-      className="text-xs border border-[--c] text-[--c] hover:bg-[--c]/20 active:bg-[--c]/40 rounded px-2 py-1 select-none cursor-pointer transition-colors"
     >
       {label}
-    </button>
+    </UnstyledButton>
   );
 }
 
@@ -136,10 +136,15 @@ interface RotationRowProps {
 function RotationRow({ axis, isAnimating }: RotationRowProps) {
   const [deg, setDeg] = useState(0);
 
-  const colorText: Record<string, string> = {
-    X: "text-red-400",
-    Y: "text-green-400",
-    Z: "text-blue-400",
+  const axisColorMap: Record<string, string> = {
+    X: theme.axes.x,
+    Y: theme.axes.y,
+    Z: theme.axes.z,
+  };
+  const mantineColorMap: Record<string, string> = {
+    X: "red",
+    Y: "green",
+    Z: "blue",
   };
   const gateFnMap: Record<string, GateFn> = {
     X: applyRx,
@@ -153,30 +158,30 @@ function RotationRow({ axis, isAnimating }: RotationRowProps) {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <span className={`text-xs font-bold w-5 ${colorText[axis]}`}>
+    <Group gap="xs" align="center" wrap="nowrap">
+      <Text className={classes.rotationLabel} style={{ color: axisColorMap[axis] }}>
         R{axis}
-      </span>
-      <input
-        type="range"
+      </Text>
+      <Slider
+        className={classes.rotationSlider}
         min={-180}
         max={180}
         step={1}
         value={deg}
-        onChange={(e) => setDeg(Number(e.target.value))}
-        className="flex-1 accent-slate-400 h-1"
+        onChange={setDeg}
+        color={mantineColorMap[axis]}
+        size="xs"
+        label={null}
       />
-      <span className="text-xs text-slate-300 w-10 text-right font-mono">
-        {deg}°
-      </span>
-      <button
+      <Text className={classes.rotationValue}>{deg}°</Text>
+      <UnstyledButton
+        className={classes.applyButton}
         onClick={apply}
         disabled={isAnimating}
-        className="text-xs border border-slate-500 text-slate-300 hover:bg-slate-600 disabled:opacity-40 rounded px-2 py-1 transition-colors cursor-pointer"
       >
         Apply
-      </button>
-    </div>
+      </UnstyledButton>
+    </Group>
   );
 }
 
@@ -205,77 +210,73 @@ export function ControlPanel({ orbitAxisRef, resetCamera }: ControlPanelProps) {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-72 min-w-60 bg-slate-900 border-l border-slate-700 p-4 overflow-y-auto text-slate-200">
-      <h1 className="text-sm font-bold tracking-widest text-slate-400 uppercase">
-        QubitView
-      </h1>
+    <Stack className={classes.panel} gap="md">
+      <div>
+        <Text className={classes.panelTitle}>QubitView</Text>
+        <Text className={classes.description}>
+          An interactive Bloch sphere visualizer for single-qubit states. Rotate
+          the view, apply gates, and explore preset states.
+        </Text>
+      </div>
 
       {/* ── coordinates ── */}
       <section>
-        <h2 className="text-xs text-slate-500 uppercase tracking-wider mb-2">
-          State
-        </h2>
-        <div className="grid grid-cols-3 gap-1.5">
+        <Text className={classes.sectionTitle}>State</Text>
+        <SimpleGrid cols={3} spacing="xs">
           <CoordCard label="|ψ⟩" value={namedLabel} />
           <CoordCard label="θ" value={`${thetaDeg}°`} sub />
           <CoordCard label="φ" value={`${phiDeg}°`} sub />
           <CoordCard label="x" value={x.toFixed(3)} sub />
           <CoordCard label="y" value={y.toFixed(3)} sub />
           <CoordCard label="z" value={z.toFixed(3)} sub />
-        </div>
+        </SimpleGrid>
       </section>
 
       {/* ── camera orbit ── */}
       <section>
-        <h2 className="text-xs text-slate-500 uppercase tracking-wider mb-2">
-          Camera
-        </h2>
-        <div className="grid grid-cols-4 gap-1.5 mb-2">
-          <OrbitButton axis="x" dir={1}  label="X ↻" orbitAxisRef={orbitAxisRef} />
+        <Text className={classes.sectionTitle}>Camera</Text>
+        <SimpleGrid cols={4} spacing="xs" mb="xs">
+          <OrbitButton axis="x" dir={1} label="X ↻" orbitAxisRef={orbitAxisRef} />
           <OrbitButton axis="x" dir={-1} label="X ↺" orbitAxisRef={orbitAxisRef} />
-          <OrbitButton axis="y" dir={1}  label="Y ↻" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton axis="y" dir={1} label="Y ↻" orbitAxisRef={orbitAxisRef} />
           <OrbitButton axis="y" dir={-1} label="Y ↺" orbitAxisRef={orbitAxisRef} />
-          <OrbitButton axis="z" dir={1}  label="Z ↻" orbitAxisRef={orbitAxisRef} />
+          <OrbitButton axis="z" dir={1} label="Z ↻" orbitAxisRef={orbitAxisRef} />
           <OrbitButton axis="z" dir={-1} label="Z ↺" orbitAxisRef={orbitAxisRef} />
-        </div>
-        <button
+        </SimpleGrid>
+        <UnstyledButton
+          className={classes.resetButton}
           onClick={() => resetCamera.current?.()}
-          className="w-full text-xs border border-slate-600 text-slate-400 hover:bg-slate-700 rounded px-2 py-1.5 transition-colors cursor-pointer"
         >
           Reset view
-        </button>
+        </UnstyledButton>
       </section>
 
       {/* ── gate rotations ── */}
       <section>
-        <h2 className="text-xs text-slate-500 uppercase tracking-wider mb-2">
-          Rotation
-        </h2>
-        <div className="flex flex-col gap-3">
+        <Text className={classes.sectionTitle}>Rotation</Text>
+        <Stack gap="sm">
           <RotationRow axis="X" isAnimating={isAnimating} />
           <RotationRow axis="Y" isAnimating={isAnimating} />
           <RotationRow axis="Z" isAnimating={isAnimating} />
-        </div>
+        </Stack>
       </section>
 
       {/* ── presets ── */}
       <section>
-        <h2 className="text-xs text-slate-500 uppercase tracking-wider mb-2">
-          Presets
-        </h2>
-        <div className="grid grid-cols-3 gap-1.5">
+        <Text className={classes.sectionTitle}>Presets</Text>
+        <SimpleGrid cols={3} spacing="xs">
           {PRESETS.map((p) => (
-            <button
+            <UnstyledButton
               key={p.label}
+              className={classes.presetButton}
               onClick={() => handlePreset(p.theta, p.phi)}
               disabled={isAnimating}
-              className="text-xs border border-slate-600 text-slate-300 hover:bg-slate-700 disabled:opacity-40 rounded px-2 py-1.5 font-mono transition-colors cursor-pointer"
             >
               {p.label}
-            </button>
+            </UnstyledButton>
           ))}
-        </div>
+        </SimpleGrid>
       </section>
-    </div>
+    </Stack>
   );
 }

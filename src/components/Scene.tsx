@@ -9,7 +9,7 @@ import { mulMat3Vec3, rotX, rotY, rotZ } from "../utils/matrixMath";
 import type { Vec3 } from "../utils/matrixMath";
 
 // Default camera: +Z up on screen, +X right, +Y into scene
-const DEFAULT_CAM_POS = new THREE.Vector3(2.5, -1.5, 1.8);
+const DEFAULT_CAM_POS = new THREE.Vector3(3.0, -1.8, 2.3);
 const CAM_UP = new THREE.Vector3(0, 0, 1);
 
 export type OrbitAxis = "x" | "y" | "z";
