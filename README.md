@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# QbitView
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive 3D Bloch sphere visualizer for exploring qubit states and quantum gates — live at **[qbitview.com](https://qbitview.com)**.
 
-Currently, two official plugins are available:
+## What is it?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+QbitView lets you visualize a qubit's state on the Bloch sphere in real time. The Bloch sphere is a geometric representation of a two-level quantum system, where every point on the sphere corresponds to a valid qubit state.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **3D Bloch sphere** — transparent shell with wireframe overlay, axis arrows, and great circle guides
+- **State vector** — displays the current qubit state with projection shadows onto each axis plane
+- **Motion trail** — shows the path of the state vector as it moves
+- **Rotation gates** — apply Rx, Ry, and Rz rotations with animated transitions
+- **State presets** — jump instantly to common states: |0⟩, |1⟩, |+⟩, |−⟩, |i⟩, |−i⟩
+- **Camera controls** — orbit the sphere with mouse drag or the directional camera buttons
+- **State label detection** — automatically identifies named states within a small angular tolerance
 
-## Expanding the ESLint configuration
+## How to use it
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Visit **[qbitview.com](https://qbitview.com)**
+2. The sphere loads with the qubit in the |0⟩ state (north pole)
+3. Use the **Rotation Gates** sliders (Rx, Ry, Rz) to apply rotations — the state animates smoothly to the new position
+4. Click a **State Preset** to jump directly to a named state
+5. Drag the sphere with your mouse or use the **Camera** buttons to orbit and inspect the state from any angle
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Local development
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev       # start dev server with HMR
+npm run build     # production build
+npm run lint      # lint
+npm test          # run unit tests
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## More coming soon
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+New features are in development. Stay tuned.
