@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className={classes.root}>
       <nav className={classes.nav}>
-        <h1 className={classes.navTitle}>QubitView</h1>
+        <h1 className={classes.navTitle}>QbitView</h1>
       </nav>
       <div className={classes.content}>
         <div className={classes.sceneWrapper}>
