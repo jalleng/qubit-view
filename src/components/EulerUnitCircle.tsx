@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { theme } from "../theme";
 
 const CX = 340;
 const CY = 240;
@@ -75,7 +76,16 @@ export default function UnitCircle() {
   const isEulerIdentity = deg === 180;
 
   return (
-    <div style={{ fontFamily: "'Georgia', serif", padding: "1.25rem 0" }}>
+    <div
+      style={{
+        fontFamily: "'Georgia', serif",
+        padding: "1.25rem 0",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       {/* SVG Canvas */}
       <svg
         width="100%"
@@ -137,10 +147,10 @@ export default function UnitCircle() {
           cx={CX}
           cy={CY}
           r={R}
-          fill="none"
+          fill={theme.sphere.shell}
           stroke="#888"
           strokeWidth="1"
-          opacity="0.25"
+          opacity="0.08"
         />
 
         {/* Tick marks */}
