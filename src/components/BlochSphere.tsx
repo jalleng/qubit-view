@@ -19,9 +19,10 @@ function toBloch(theta: number, phi: number): THREE.Vector3 {
 function circlePoints(
   normal: THREE.Vector3,
   r: number,
-  N: number,
+  N: number = 128,
 ): THREE.Vector3[] {
   // Build a local frame perpendicular to normal
+  const segments = Number.isFinite(N) ? Math.max(3, Math.floor(N)) : 128;
   const u = new THREE.Vector3();
   const v = new THREE.Vector3();
   const ref =
@@ -32,8 +33,8 @@ function circlePoints(
   v.crossVectors(normal, u);
 
   const pts: THREE.Vector3[] = [];
-  for (let i = 0; i <= N; i++) {
-    const a = (i / N) * Math.PI * 2;
+  for (let i = 0; i <= segments; i++) {
+    const a = (i / segments) * Math.PI * 2;
     pts.push(
       u
         .clone()
@@ -122,7 +123,7 @@ interface AxisArrowProps {
 
 function AxisArrow({ dir, color, label, labelOffset }: AxisArrowProps) {
   const len = 1.35;
-  const shaftEnd = dir.clone().multiplyScalar(len - 0.12);
+  const posEnd = dir.clone().multiplyScalar(len - 0.12);
   const negEnd = dir.clone().multiplyScalar(-len * 0.6);
   const tipPos = dir.clone().multiplyScalar(len);
 
@@ -142,7 +143,7 @@ function AxisArrow({ dir, color, label, labelOffset }: AxisArrowProps) {
           <bufferAttribute
             attach="attributes-position"
             args={[
-              new Float32Array([0, 0, 0, shaftEnd.x, shaftEnd.y, shaftEnd.z]),
+              new Float32Array([0, 0, 0, posEnd.x, posEnd.y, posEnd.z]),
               3,
             ]}
           />
@@ -190,21 +191,22 @@ function AxisArrow({ dir, color, label, labelOffset }: AxisArrowProps) {
 // ── state vector ──────────────────────────────────────────────────────────────
 
 interface StateVectorProps {
-  bloch: THREE.Vector3;
+  blochState: THREE.Vector3;
 }
 
-function StateVector({ bloch }: StateVectorProps) {
-  const tipPos = bloch.clone();
-  const shaftEnd = bloch.clone().multiplyScalar(0.88);
-  const dir = bloch.clone().normalize();
+function StateVector({ blochState }: StateVectorProps) {
+  const tipPos = blochState.clone();
+  const shaftEnd = blochState.clone().multiplyScalar(0.88);
+  const dir = blochState.clone().normalize();
   const quat = new THREE.Quaternion().setFromUnitVectors(
+    // default cone points +Y, we want it along dir
     new THREE.Vector3(0, 1, 0),
     dir,
   );
 
   // equatorial shadow point
-  const shadow = new THREE.Vector3(bloch.x, bloch.y, 0);
-  const conePos = bloch.clone().multiplyScalar(0.92);
+  const shadow = new THREE.Vector3(blochState.x, blochState.y, 0);
+  const conePos = blochState.clone().multiplyScalar(0.92);
 
   return (
     <group>
@@ -232,7 +234,7 @@ function StateVector({ bloch }: StateVectorProps) {
         <meshStandardMaterial
           color={theme.stateVector.body}
           emissive={theme.stateVector.body}
-          emissiveIntensity={0.6}
+          emissiveIntensity={0.4}
         />
       </mesh>
       {/* vertical projection dashed */}
@@ -318,7 +320,7 @@ function Trail() {
 export function BlochSphere() {
   const theta = useQubitStore((s) => s.theta);
   const phi = useQubitStore((s) => s.phi);
-  const bloch = useMemo(() => toBloch(theta, phi), [theta, phi]);
+  const blochState = useMemo(() => toBloch(theta, phi), [theta, phi]);
 
   return (
     <group>
@@ -395,7 +397,7 @@ export function BlochSphere() {
       </Text>
 
       {/* state vector + projections */}
-      <StateVector bloch={bloch} />
+      <StateVector blochState={blochState} />
 
       {/* trail */}
       <Trail />
