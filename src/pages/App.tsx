@@ -4,6 +4,9 @@ import HomePage from "./HomePage";
 import classes from "./App.module.css";
 import { EulerCirclePage } from "./EulerCirclePage";
 
+const JALLENG_APP_LINK: string | undefined =
+  import.meta.env.VITE_JALLENG_APP_LINK ?? "";
+
 export default function App() {
   return (
     <div className={classes.root}>
@@ -17,6 +20,14 @@ export default function App() {
         <Link to="/euler-circle" className={classes.navLink}>
           Euler Circle
         </Link>
+        <a
+          className={classes.jallengAppLink}
+          href={JALLENG_APP_LINK || "#"}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          A Jalleng App
+        </a>
       </nav>
       <div className={classes.pageWrapper}>
         <Routes>
