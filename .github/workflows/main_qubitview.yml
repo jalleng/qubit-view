@@ -25,6 +25,8 @@ jobs:
           node-version: "22.x"
 
       - name: npm install, build, and test
+        env:
+          VITE_JALLENG_APP_LINK: ${{ secrets.VITE_JALLENG_APP_LINK }}
         run: |
           npm install
           npm run build --if-present
