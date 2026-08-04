@@ -33,7 +33,9 @@
   padding: 0.25rem 0.625rem;
   border: 1px solid var(--mantine-color-dark-4);
   border-radius: 4px;
-  transition: color 120ms ease, background-color 120ms ease;
+  transition:
+    color 120ms ease,
+    background-color 120ms ease;
 }
 
 .navLink:hover {
@@ -56,4 +58,12 @@
 .sceneWrapper {
   flex: 1;
   min-width: 0;
+}
+
+.jallengAppLink {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  font-style: italic;
+  text-decoration: none;
 }
