@@ -24,6 +24,14 @@ QbitView lets you visualize a qubit's state on the Bloch sphere in real time. Th
 4. Click a **State Preset** to jump directly to a named state
 5. Drag the sphere with your mouse or use the **Camera** buttons to orbit and inspect the state from any angle
 
+## Built with
+
+Vite, React, TypeScript, Three.js, and Mantine. Deployed to Azure through a GitHub Actions CI/CD pipeline.
+
+AI-assisted development
+
+I built QbitView with Claude Code as part of my workflow. I used it to scaffold the project and write tests, and I keep a CLAUDE.md in the repo with project conventions and build commands so AI-assisted changes stay consistent. I review every diff and run the app and tests before committing.
+
 ## Local development
 
 ```bash
